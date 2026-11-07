@@ -1,0 +1,56 @@
+[
+  {
+    "title": "Cultura general de Venezuela",
+    "description": "Quiz de ejemplo para probar Kahahara.",
+    "questions": [
+      {
+        "text": "¿Cuál es la capital de Venezuela?",
+        "options": ["Maracaibo", "Caracas", "Valencia", "Barquisimeto"],
+        "correctIndex": 1,
+        "timeLimit": 20
+      },
+      {
+        "text": "¿Cómo se llama la cascada más alta del mundo?",
+        "options": ["Salto Ángel", "Cataratas del Niágara", "Cataratas de Iguazú", "Salto Kaieteur"],
+        "correctIndex": 0,
+        "timeLimit": 20
+      },
+      {
+        "text": "¿Qué lago venezolano es uno de los más antiguos del mundo?",
+        "options": ["Lago de Valencia", "Lago de Maracaibo"],
+        "correctIndex": 1,
+        "timeLimit": 15
+      },
+      {
+        "text": "¿Cuál es el ave nacional de Venezuela?",
+        "options": ["Guacamaya", "Turpial", "Cóndor", "Colibrí"],
+        "correctIndex": 1,
+        "timeLimit": 20
+      }
+    ]
+  },
+  {
+    "title": "Fundamentos de programación",
+    "description": "Preguntas básicas de informática.",
+    "questions": [
+      {
+        "text": "¿Qué estructura de datos sigue el orden LIFO?",
+        "options": ["Cola", "Pila", "Lista enlazada", "Árbol"],
+        "correctIndex": 1,
+        "timeLimit": 20
+      },
+      {
+        "text": "¿Cuál es la complejidad de la búsqueda binaria?",
+        "options": ["O(n)", "O(n log n)", "O(log n)", "O(1)"],
+        "correctIndex": 2,
+        "timeLimit": 30
+      },
+      {
+        "text": "HTTP es un protocolo con estado.",
+        "options": ["Verdadero", "Falso"],
+        "correctIndex": 1,
+        "timeLimit": 10
+      }
+    ]
+  }
+]

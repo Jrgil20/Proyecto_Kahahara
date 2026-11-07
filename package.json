@@ -1,0 +1,33 @@
+{
+  "name": "proyecto_kahahara",
+  "version": "1.0.0",
+  "description": "Kahahara: juego de preguntas en tiempo real estilo Kahoot (Node.js + Socket.IO)",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "node --watch server/index.js",
+    "test": "node --test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jrgil20/proyecto_kahahara.git"
+  },
+  "keywords": [],
+  "author": "Jesús Rodolfo Gil Farías",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Jrgil20/proyecto_kahahara/issues"
+  },
+  "homepage": "https://github.com/Jrgil20/proyecto_kahahara#readme",
+  "dependencies": {
+    "express": "^4.22.3",
+    "socket.io": "^4.8.4"
+  },
+  "devDependencies": {
+    "socket.io-client": "^4.8.4"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "private": true
+}
