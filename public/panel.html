@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mis quizzes · Kahahara</title>
+  <link rel="icon" href="img/logo.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bakbak+One&family=Roboto:wght@400;500;700&display=swap">
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body class="fondo-invertido">
+  <header class="barra">
+    <a class="marca" href="panel.html"><img src="img/logo.svg" alt="">Kahahara</a>
+    <button id="salir" class="boton secundario pequeno" type="button">Cerrar sesión</button>
+  </header>
+  <main class="contenido">
+    <section class="tarjeta ancha" style="margin:0 auto;">
+      <div class="fila entre">
+        <h1 style="font-size:clamp(2rem,5vw,3rem); text-align:left; margin:0;">Mis quizzes</h1>
+        <a class="boton" href="editor.html">+ Nuevo quiz</a>
+      </div>
+      <div id="mensaje" hidden style="margin-top:1rem;"></div>
+      <div id="lista" class="lista-quizzes" aria-live="polite"></div>
+    </section>
+  </main>
+  <script src="js/comun.js"></script>
+  <script>
+    (function () {
+      'use strict';
+      const { h, api, sesion, mostrarMensaje, aviso } = window.K;
+      sesion.exigir();
+
+      const lista = document.getElementById('lista');
+      const mensaje = document.getElementById('mensaje');
+
+      function fecha(iso) {
+        try { return new Date(iso).toLocaleDateString('es', { day: 'numeric', month: 'short', year: 'numeric' }); }
+        catch { return ''; }
+      }
+
+      async function cargar() {
+        lista.replaceChildren(h('p', { class: 'muted' }, 'Cargando…'));
+        try {
+          const quizzes = await api('/quizzes');
+          lista.replaceChildren();
+          if (quizzes.length === 0) {
+            lista.append(h('p', { class: 'muted' }, 'Aún no tienes quizzes. Crea el primero con «+ Nuevo quiz».'));
+            return;
+          }
+          quizzes
+            .sort((a, b) => String(b.updatedAt).localeCompare(String(a.updatedAt)))
+            .forEach((q) => lista.append(tarjeta(q)));
+        } catch (err) {
+          lista.replaceChildren();
+          mostrarMensaje(mensaje, err.message);
+        }
+      }
+
+      function tarjeta(q) {
+        return h('article', { class: 'quiz-item' },
+          h('h3', null, q.title),
+          q.description ? h('p', null, q.description) : null,
+          h('p', { class: 'muted' }, `${q.questionCount} ${q.questionCount === 1 ? 'pregunta' : 'preguntas'} · ${fecha(q.updatedAt)}`),
+          h('div', { class: 'fila' },
+            h('a', { class: 'boton pequeno', href: `host.html?quiz=${encodeURIComponent(q.id)}` }, '▶ Jugar'),
+            h('a', { class: 'boton secundario pequeno', href: `editor.html?id=${encodeURIComponent(q.id)}` }, 'Editar'),
+            h('button', { type: 'button', class: 'boton peligro pequeno', onclick: () => eliminar(q) }, 'Eliminar')
+          )
+        );
+      }
+
+      async function eliminar(q) {
+        if (!confirm(`¿Eliminar «${q.title}»? Esta acción no se puede deshacer.`)) return;
+        try {
+          await api(`/quizzes/${encodeURIComponent(q.id)}`, { method: 'DELETE' });
+          aviso('Quiz eliminado', 'exito');
+          cargar();
+        } catch (err) {
+          aviso(err.message);
+        }
+      }
+
+      document.getElementById('salir').addEventListener('click', async () => {
+        try { await api('/logout', { method: 'POST' }); } catch { /* da igual */ }
+        sesion.borrar();
+        location.replace('administrador.html');
+      });
+
+      cargar();
+    })();
+  </script>
+</body>
+</html>

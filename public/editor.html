@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Editor de quiz · Kahahara</title>
+  <link rel="icon" href="img/logo.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bakbak+One&family=Roboto:wght@400;500;700&display=swap">
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body class="fondo-invertido">
+  <header class="barra">
+    <a class="marca" href="panel.html"><img src="img/logo.svg" alt="">Kahahara</a>
+    <a class="boton secundario pequeno" href="panel.html">← Mis quizzes</a>
+  </header>
+  <main class="contenido">
+    <form id="form-quiz" class="tarjeta ancha pila" style="margin:0 auto;" novalidate>
+      <h1 id="titulo-pagina" style="font-size:clamp(2rem,5vw,3rem); text-align:left; margin:0;">Nuevo quiz</h1>
+      <div id="mensaje" hidden></div>
+      <div class="campo">
+        <label for="titulo">Título</label>
+        <input id="titulo" class="entrada compacta" maxlength="100" required>
+      </div>
+      <div class="campo">
+        <label for="descripcion">Descripción <span class="muted">(opcional)</span></label>
+        <textarea id="descripcion" class="entrada compacta" maxlength="300" rows="2"></textarea>
+      </div>
+      <div id="preguntas" class="pila"></div>
+      <div class="fila entre">
+        <button id="agregar" type="button" class="boton secundario">+ Agregar pregunta</button>
+        <button type="submit" class="boton">Guardar</button>
+      </div>
+    </form>
+  </main>
+  <script src="js/comun.js"></script>
+  <script src="js/editor.js"></script>
+</body>
+</html>

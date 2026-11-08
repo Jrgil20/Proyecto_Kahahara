@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Administrador · Kahahara</title>
+  <link rel="icon" href="img/logo.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bakbak+One&family=Roboto:wght@400;500;700&display=swap">
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body class="fondo-invertido">
+  <header class="barra">
+    <a class="marca" href="/"><img src="img/logo.svg" alt="">Kahahara</a>
+  </header>
+  <main class="centrado">
+    <section class="tarjeta">
+      <h1>Administrador</h1>
+      <form id="form-login" class="pila" novalidate>
+        <div id="mensaje" hidden></div>
+        <div class="campo">
+          <label for="usuario" class="sr-only">Usuario</label>
+          <input id="usuario" name="usuario" class="entrada" placeholder="Usuario" autocomplete="username" required>
+        </div>
+        <div class="campo">
+          <label for="contrasena" class="sr-only">Contraseña</label>
+          <input id="contrasena" name="contrasena" type="password" class="entrada" placeholder="Contraseña" autocomplete="current-password" required>
+        </div>
+        <div class="fila centro">
+          <button class="boton" type="submit">Entrar</button>
+        </div>
+      </form>
+    </section>
+  </main>
+  <script src="js/comun.js"></script>
+  <script>
+    (function () {
+      'use strict';
+      const { api, sesion, mostrarMensaje, parametro } = window.K;
+      const form = document.getElementById('form-login');
+      const mensaje = document.getElementById('mensaje');
+
+      if (sesion.token()) location.replace('panel.html');
+      if (parametro('expirada')) mostrarMensaje(mensaje, 'Tu sesión expiró. Vuelve a iniciar sesión.', 'error');
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const usuario = form.usuario.value.trim();
+        const contrasena = form.contrasena.value;
+        if (!usuario || !contrasena) {
+          mostrarMensaje(mensaje, 'Escribe tu usuario y contraseña.');
+          return;
+        }
+        const boton = form.querySelector('button');
+        boton.disabled = true;
+        try {
+          const { token } = await api('/login', { method: 'POST', body: { usuario, contrasena }, auth: false });
+          sesion.guardar(token);
+          location.replace('panel.html');
+        } catch (err) {
+          mostrarMensaje(mensaje, err.message);
+          form.contrasena.select();
+        } finally {
+          boton.disabled = false;
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

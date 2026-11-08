@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jugador · Kahahara</title>
+  <link rel="icon" href="img/logo.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bakbak+One&family=Roboto:wght@400;500;700&display=swap">
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+  <header class="barra">
+    <a class="marca" href="/"><img src="img/logo.svg" alt="">Kahahara</a>
+  </header>
+
+  <!-- Paso 1: PIN -->
+  <main id="vista-pin" class="centrado">
+    <section class="tarjeta">
+      <h1>Jugador</h1>
+      <form id="form-pin" class="pila" novalidate>
+        <div id="mensaje-pin" hidden></div>
+        <label for="pin" class="sr-only">PIN de la partida</label>
+        <input id="pin" class="entrada pin" inputmode="numeric" pattern="[0-9]*" maxlength="6" placeholder="PIN" autocomplete="off" autofocus>
+        <div class="fila centro"><button class="boton" type="submit">Ingresar</button></div>
+      </form>
+    </section>
+  </main>
+
+  <!-- Paso 2: apodo -->
+  <main id="vista-apodo" class="centrado" hidden>
+    <section class="tarjeta">
+      <h1>Tu apodo</h1>
+      <p id="titulo-partida" class="muted" style="text-align:center; margin-top:-0.5rem;"></p>
+      <form id="form-apodo" class="pila" novalidate>
+        <div id="mensaje-apodo" hidden></div>
+        <label for="apodo" class="sr-only">Apodo</label>
+        <input id="apodo" class="entrada" maxlength="20" placeholder="Apodo" autocomplete="nickname">
+        <div class="fila centro">
+          <button class="boton secundario" type="button" id="volver-pin">Atrás</button>
+          <button class="boton" type="submit">¡Listo!</button>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <!-- Paso 3: juego -->
+  <div id="vista-juego" class="pantalla-jugador" hidden>
+    <div id="area-juego" class="pila" style="flex:1;"></div>
+    <div class="pie-jugador">
+      <span id="pie-apodo"></span>
+      <span id="pie-puntos">0 pts</span>
+    </div>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="js/comun.js"></script>
+  <script src="js/jugador.js"></script>
+</body>
+</html>
